@@ -6,13 +6,15 @@ namespace LabSix_
     {
         public int MainMenu()
         {
+            
             uint choice = 0;
             bool can = false;
-            Console.WriteLine("\t\t\tКОНСОЛЬНОЕ ПРИЛОЖЕНИЕ ДЛЯ РАБОТЫ С МАССИВАМИ СТРОК");
+            Console.WriteLine("\n\t\t\tКОНСОЛЬНОЕ ПРИЛОЖЕНИЕ ДЛЯ РАБОТЫ С МАССИВАМИ СТРОК");
             try
             {
-                Console.WriteLine("\nВыберите индекс действия основного меню\n1.  Заполнить символами строку;" +
-                "\n2.  Преобразовать строку в массив строк;" +
+                Console.WriteLine("\nВыберите индекс действия основного меню" +
+                "\n1.  Преобразовать строку по-умолчанию в массив строк;" +
+                "\n2.  Заполнить строку самостоятельно и преобразовать в массив строк;" +
                 "\n3.  Вывод массива строк;" +
                 "\n4.  Перевернуть каждую четную строку;" +
                 "\n5.  Выход.");
@@ -20,16 +22,16 @@ namespace LabSix_
                 switch (choice)
                 {
                     case 1:
-                        InputArrayStr();
+                        ConvertStrInArray(ref ifMenuChoiceOne);
                         break;
                     case 2:
-                        ToArray();
+                        InputStr();
                         break;
                     case 3:
-                        Cout();
+                        Cout(arrayStr);
                         break;
                     case 4:
-                        
+                        ReverseStrInArray();
                         break;
                     case 5:
                         can = true;

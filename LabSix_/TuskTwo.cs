@@ -1,44 +1,110 @@
 ﻿using System;
+using System.Text;
 
 namespace LabSix_
 {
     class TuskTwo
     {
-        private string[] arrayStr;
-        private string forArrayStr;
+        protected string[] arrayStr;
+        protected StringBuilder forArrayStr,
+            ifMenuChoiceOne;
         
-
-        protected string InputArrayStr()
+        public TuskTwo()
         {
-            Console.WriteLine("\nЗаполните строку...");
-            forArrayStr = Console.ReadLine();
-            return forArrayStr;
+            arrayStr = new string[0];
+            forArrayStr = new StringBuilder("Лаб.  Работа!   №6?");
+            ifMenuChoiceOne = forArrayStr;
         }
 
-        protected string[] ToArray()
+        protected string[] InputStr()
         {
-            if (arrayStr.Length == 0)
+            Console.WriteLine("\nЗаполните строку...");
+            do
             {
-                Console.WriteLine("\nСначала заполните строку!");
-                return null;
+                try
+                {
+                    forArrayStr = new StringBuilder(Console.ReadLine());
+                    break;
+                }
+                catch(OverflowException oex)
+                {
+                    Console.WriteLine(oex.Message);
+                }
+
+            } while (true);
+            return ConvertStrInArray(ref forArrayStr);
+        }
+
+        protected string[] ConvertStrInArray(ref StringBuilder strBuilder, bool reverseYes = false)
+        {
+            if (reverseYes)
+            {
+                arrayStr = SplitForArray_(ref strBuilder);
+                Cout(arrayStr);
+                return arrayStr;
             }
-                
-            Console.WriteLine("\nСтрока преобразованная в массив строк");
-            arrayStr = InputArrayStr().Split(new string[] { " ", "   ", "   ", ",", ":", ";"}, StringSplitOptions.RemoveEmptyEntries);
+            arrayStr = AddingSlachNAndSplit_(ref strBuilder);
+            Cout(arrayStr);
             return arrayStr;
         }
 
-        protected void Cout()
+        private string[] AddingSlachNAndSplit_(ref StringBuilder strBuilder)
         {
-            if (arrayStr.Length != 0)
+            for (UInt16 i = 0; i < strBuilder.Length; i++)
             {
-                for (UInt16 i = 0; i < arrayStr.Length; i++)
+                if (strBuilder[i] == '.' || strBuilder[i] == '!' || strBuilder[i] == '?')
                 {
-                    Console.WriteLine($"{arrayStr[i]}!");
+                    strBuilder.Length = strBuilder.Length + 1;
+                    strBuilder[i + 1] = '\n';
                 }
+            }
+            return SplitForArray_(ref strBuilder);
+        }
+
+        private string[] SplitForArray_(ref StringBuilder strBuilder)
+        {
+            string[] arrayStr_ = strBuilder.ToString().Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return arrayStr_;
+        }
+
+        protected void Cout(in string[] forCout = null)
+        {
+            if (forCout == null || forCout.Length == 0)
+            {
+                Console.WriteLine("\nМассив пуст.\n");
                 return;
             }
-            Console.WriteLine("\nМассив пуст.");
+            Console.Write("\n");
+            foreach (string s in forCout)
+            {
+                Console.WriteLine(s);
+            }
+            Console.Write("\n");
+        }
+
+        protected string[] ReverseStrInArray()
+        {
+            StringBuilder tmp = new StringBuilder();
+            string[] forReverse = arrayStr;
+            char[] rev;
+            for (UInt16 i = 0; i < forReverse.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    rev = forReverse[i].ToCharArray();
+                    Array.Reverse(rev);
+                    tmp.Append(rev);
+                    tmp.Append("\n");
+                }
+                else
+                {
+                    rev = forReverse[i].ToCharArray();
+                    tmp.Append(forReverse[i]);
+                    tmp.Append("\n");
+                }
+            }
+            forArrayStr = tmp;
+            return ConvertStrInArray(ref forArrayStr, reverseYes: true);
         }
     }
 }
