@@ -12,8 +12,7 @@ namespace LabSix_
         public TuskTwo()
         {
             arrayStr = new string[0];
-            forArrayStr = new StringBuilder("Лаб.  Работа!   №6?");
-            ifMenuChoiceOne = forArrayStr;
+            ifMenuChoiceOne = new StringBuilder("Лаб.  Работа!   №6?");
         }
 
         protected string[] InputStr()
@@ -85,21 +84,20 @@ namespace LabSix_
         protected string[] ReverseStrInArray()
         {
             StringBuilder tmp = new StringBuilder();
-            string[] forReverse = arrayStr;
             char[] rev;
-            for (UInt16 i = 0; i < forReverse.Length; i++)
+            for (UInt16 i = 0; i < arrayStr.Length; i++)
             {
                 if (i % 2 == 0)
                 {
-                    rev = forReverse[i].ToCharArray();
+                    rev = arrayStr[i].ToCharArray();
                     Array.Reverse(rev);
                     tmp.Append(rev);
                     tmp.Append("\n");
                 }
                 else
                 {
-                    rev = forReverse[i].ToCharArray();
-                    tmp.Append(forReverse[i]);
+                    rev = arrayStr[i].ToCharArray();
+                    tmp.Append(arrayStr[i]);
                     tmp.Append("\n");
                 }
             }
